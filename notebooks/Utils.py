@@ -53,12 +53,13 @@ class Modelo:
         print("R2: ", r2)
         print("MSE: ", mse)
 
-    def GetSummary(self):
+    def GetSummary(self, intercept=True):
         #Create a copy DF to pass to statsmodel
-        X_train_const = pd.DataFrame(self.X_train, columns=self.X_cols)
+        X_train_sm = pd.DataFrame(self.X_train, columns=self.X_cols)
 
         # Add and intercept constant
-        X_train_sm = sm.add_constant(X_train_const)
+        if intercept:
+            X_train_sm = sm.add_constant(X_train_sm)
 
         # Adjust model
         ols_model = sm.OLS(self.y_train, X_train_sm).fit()
